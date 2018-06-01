@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="ir_cron_get_purchase_from_fttx" model="ir.cron">
+            <field name="name">定时获取采购单</field>
+            <field name="model_id" ref="model_purchase_track" />
+            <field name="state">code</field>
+            <field name="code">model.cron_get_purchase_from_fttx()</field>
+            <field name="interval_number">10</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+    </data>
+</odoo>

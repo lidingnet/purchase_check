@@ -1,0 +1,282 @@
+<odoo>
+    <data>
+
+        <!--Top menu item↓↓↓↓↓-->
+        <menuitem id="menu_pt_top" name="采购跟单" sequence="23" />
+        <menuitem id="menu_pt_manage" name="Purchase Manage" sequence="10"  parent="menu_pt_top"/>
+        <menuitem id="menu_pt_basic_data" name="Basic Data" sequence="30" parent="menu_pt_top" />
+        <!--Top menu item↑↑↑↑↑-->
+
+        <!--搜索视图-->
+        <record id="purchase_view_search" model="ir.ui.view" >
+            <field name="name">purchase.track.search</field>
+            <field name="model">purchase.track</field>
+            <field name="arch" type="xml">
+                <search string="Search">
+                    <filter name="is_new" string="New Order" domain="[('user_id','=',False), ('is_del','=',False)]" />
+                    <filter name="is_mine" string="My Order" domain="[('user_id','=',uid), ('is_del','=',False)]" />
+                    <filter name="is_salesman_mine" string="My Order(sales)" domain="[('user_id','!=',False), ('is_del','=',False)]" />
+                    <filter name="is_finish" string="Finish" domain="[('is_finished', '=', '1'), ('is_del','=',False)]" />
+                    <filter name="is_delete" string="DEL" domain="[('is_del', '=', True)]" />
+
+                    <separator/>
+                </search>
+            </field>
+        </record>
+        <!--<record id="lunch_order_line_view_search" model="ir.ui.view">-->
+            <!--<field name="name">lunch.order.line.search</field>-->
+            <!--<field name="model">lunch.order.line</field>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<search string="Search">-->
+                    <!--<filter name='is_mine' string="My Orders" domain="[('user_id','=',uid)]"/>-->
+                    <!--<separator/>-->
+                    <!--<field name="name" string="Product" filter_domain="['|', ('name', 'ilike', self), ('note', 'ilike', self)]"/>-->
+                    <!--<filter name="not_confirmed" string="Not Received" domain="[('state','!=',('confirmed'))]"/>-->
+                    <!--<filter name="confirmed" string="Received" domain="[('state','=','confirmed')]"/>-->
+                    <!--<filter name="cancelled" string="Cancelled" domain="[('state','=','cancelled')]"/>-->
+                    <!--<separator/>-->
+                    <!--<filter name="today" string="Today" domain="[('date','=',time.strftime('%%Y-%%m-%%d'))]"/>-->
+                    <!--<field name="user_id"/>-->
+                    <!--<group expand="0" string="Group By">-->
+                        <!--<filter name="group_by_order_id" string="By Order" context="{'group_by':'order_id'}"/>-->
+                        <!--<filter name="group_by_supplier" string="By Vendor" context="{'group_by':'supplier'}"/>-->
+                        <!--<filter name="group_by_date" string="Order Month" context="{'group_by':'date'}" help="Vendor Orders by Month"/>-->
+                    <!--</group>-->
+                <!--</search>-->
+            <!--</field>-->
+        <!--</record>-->
+
+        <!--采购订单列表-->
+        <record model="ir.ui.view" id="view_pt_list">
+            <field name="name">采购跟单列表</field>
+            <field name="model">purchase.track</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="id" />
+                    <field name="purchase_id" />
+                    <field name="purchase_year" />
+                    <field name="purchase_month" />
+                    <field name="purcharse_no" />
+                    <field name="salesman" />
+                    <!--<field name="contract_op_name" />-->
+                    <field name="cust_no" />
+                    <field name="buyer" />
+                    <field name="purchase_date"  widget="date"/>
+                    <field name="category"  />
+                    <field name="category_detail"  />
+                    <field name="purchase_delivery_date" />
+                    <field name="total_num" />
+                    <field name="total_amount" />
+                    <field name="purchase_back_date" />
+                    <field name="product_type" />
+                    <field name="actually_delivery_date" />
+                    <field name="delivery_state" />
+                    <field name="supply_name" />
+                    <field name="is_finished" />
+                    <field name="user_id" />
+                    <field name="create_date" string="填写日期" />
+                    <field name="is_del" string="del" invisible="1" />
+                    <button name="btn_unlink" type="object" string="×" attrs="{'invisible':[('is_del','=',True)]}" />
+                    <button name="btn_unlink" type="object" string="√" attrs="{'invisible':[('is_del','=',False)]}" />
+                </tree>
+            </field>
+        </record>
+
+        <!--采购订单列表（timeLine）-->
+        <record model="ir.ui.view" id="view_pt_list_timeline">
+            <field name="name">采购跟单列表</field>
+            <field name="model">purchase.track</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="id" invisible="1"/>
+                    <field name="purchase_id" invisible="1"/>
+                    <field name="purcharse_no" />
+                    <field name="category"  />
+                    <field name="category_detail"  />
+                    <field name="supply_name" />
+                    <field name="salesman" />
+                    <field name="cust_no" />
+                    <field name="buyer" />
+                    <field name="timeline" />
+                </tree>
+            </field>
+        </record>
+
+        <!--跟单表单-->
+        <record model="ir.ui.view" id="view_pt_form">
+            <field name="name">采购跟踪表单</field>
+            <field name="model">purchase.track</field>
+            <field name="arch" type="xml">
+                <form>
+                    <!--<sheet>-->
+                        <group>
+                            <group>
+                                <field name="purcharse_no" readonly="1" />
+                                <!--下单日期-->
+                                <field name="purchase_date" />
+                                <field name="purchase_back_date" />
+                                <field name="actually_delivery_date"  readonly="1"/>
+                                <field name="category"  />
+                                <field name="category_detail"  />
+                                <!--跟单员-->
+                                <field name="user_id" ref="base.user_root"/>
+                                <field name="is_finished" />
+                                <field name="delivery_state" />
+                            </group>
+                            <group>
+                                <field name="supply_name" readonly="1" />
+                                <field name="purchase_delivery_date" readonly="1" />
+                                <field name="total_num" readonly="1" />
+                                <field name="total_amount" readonly="1" />
+                                <field name="buyer" readonly="1" />
+                                <field name="contract_op_name" readonly="1" />
+                                <field name="salesman" readonly="1" />
+                                <field name="cust_no" readonly="1" />
+                            </group>
+                        </group>
+                        <!--跟单表单详细信息-->
+                    <notebook>
+
+                        <page name="purchase_track_detail" string="跟单进度">
+                            <separator string='填写跟单进度:'/>
+                            <field name="purchase_track_line_ids">
+                                <tree string="List" editable="bottom" edit="0" delete="0">
+                                    <field name="purchase_track_item" attrs="{'readonly':[('editable', '=', False)]}"/>
+                                    <field name="confirm_date" attrs="{'readonly':[('editable', '=', False)]}" />
+                                    <!--<field name="confirm_date"  attrs="{'readonly':['|',('editable', '=', False), ('purchase_track_item.need_date', '=', False)]}" />-->
+                                    <field name="remarks" />
+                                    <field name="create_uid" readonly="1" />
+                                    <field name="create_date" readonly="1" />
+                                    <field name="editable"  invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="purchase.track.qc" string="验货记录">
+                            <field name="purchase_track_qc_ids">
+                                <tree string="List" editable="bottom" edit="0" delete="0">
+                                    <field name="qc_method" attrs="{'readonly':[('editable', '=', False)]}"/>
+                                    <field name="qc_clerk" attrs="{'readonly':[('editable', '=', False)]}"/>
+                                    <field name="qc_date" attrs="{'readonly':[('editable', '=', False)]}"/>
+                                    <field name="qc_pass" attrs="{'readonly':[('editable', '=', False)]}"/>
+                                    <field name="qc_remark"/>
+                                    <field name="create_uid" readonly="1"/>
+                                    <field name="create_date" readonly="1" />
+                                    <field name="editable" invisible="1"></field>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="purchase.track.payment" string="付款记录">
+
+                        </page>
+                    </notebook>
+                    <!--</sheet>-->
+                </form>
+            </field>
+        </record>
+
+        <!--动作菜单-->
+        <record id="action_purchase_track_new" model="ir.actions.act_window">
+            <field name="name">新的采购</field>
+            <field name="res_model">purchase.track</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="purchase_view_search" />
+            <field name="context" >{"search_default_is_new":1}</field>
+            <!--<field name="context">{"search_default_group_by_supplier":1, "search_default_today":1}</field>-->
+        </record>
+        <menuitem id="menu_pt_new" name="新的采购" parent="menu_pt_manage" sequence="10" action="action_purchase_track_new" />
+
+        <record id="action_purchase_track_mine" model="ir.actions.act_window">
+            <field name="name">我的跟单</field>
+            <field name="res_model">purchase.track</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="purchase_view_search" />
+            <field name="context" >{"search_default_is_mine":1}</field>
+        </record>
+        <menuitem id="menu_pt_mine" name="我的跟单" parent="menu_pt_manage" sequence="20" action="action_purchase_track_mine" />
+
+        <record id="action_purchase_track_mine_salesman" model="ir.actions.act_window">
+            <field name="name">我的跟单(业务)</field>
+            <field name="res_model">purchase.track</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="purchase_view_search" />
+            <field name="context" >{"search_default_is_salesman_mine":1}</field>
+        </record>
+        <menuitem id="menu_pt_mine_salesman" name="我的跟单(业务)" parent="menu_pt_manage" sequence="21" action="action_purchase_track_mine_salesman" />
+
+
+        <record id="action_purchase_track_mine_timeline" model="ir.actions.act_window">
+            <field name="name">我的跟单(时间线)</field>
+            <field name="res_model">purchase.track</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_pt_list_timeline"/>
+            <field name="search_view_id" ref="purchase_view_search" />
+            <field name="context" >{"search_default_is_mine":1}</field>
+        </record>
+        <menuitem id="menu_pt_mine_timeline" name="我的跟单(时间线)" parent="menu_pt_manage" sequence="25" action="action_purchase_track_mine_timeline" />
+
+        <record id="action_purchase_track_mine_salesman_timeline" model="ir.actions.act_window">
+            <field name="name">我的跟单(业务)(时间线)</field>
+            <field name="res_model">purchase.track</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_pt_list_timeline"/>
+            <field name="search_view_id" ref="purchase_view_search" />
+            <field name="context" >{"search_default_is_salesman_mine":1}</field>
+        </record>
+        <menuitem id="menu_pt_mine_salesman_timeline" name="我的跟单(业务)(时间线)" parent="menu_pt_manage" sequence="26" action="action_purchase_track_mine_salesman_timeline" />
+
+        <record id="action_purchase_track_finish" model="ir.actions.act_window">
+            <field name="name">已完成</field>
+            <field name="res_model">purchase.track</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="purchase_view_search" />
+            <field name="context" >{"search_default_is_finish":1}</field>
+        </record>
+        <menuitem id="menu_pt_finish" name="已完成" parent="menu_pt_manage" sequence="30" action="action_purchase_track_finish" />
+
+        <record id="action_purchase_track_delete" model="ir.actions.act_window">
+            <field name="name">已删除</field>
+            <field name="res_model">purchase.track</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="purchase_view_search" />
+            <field name="context" >{"search_default_is_delete":1}</field>
+        </record>
+        <menuitem id="menu_pt_delete" name="已删除" parent="menu_pt_manage" sequence="40" action="action_purchase_track_delete" />
+
+        <!--跟单事项维护↓↓↓↓↓↓-->
+        <record id="action_purchase_track_item" model="ir.actions.act_window">
+            <field name="name">跟单事项</field>
+            <field name="res_model">purchase.track.items</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem
+            id="menu_pt_item"
+            name="采购跟单事项"
+            parent="menu_pt_basic_data"
+            sequence="20"
+            action="action_purchase_track_item"
+        />
+            <!--跟单事项列表-->
+        <record model="ir.ui.view" id="view_purchase_track_items_list">
+            <field name="name">采购跟单事项列表</field>
+            <field name="model">purchase.track.items</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="id" />
+                    <field name="name" />
+                    <field name="need_date" />
+                </tree>
+            </field>
+        </record>
+
+        <!--跟单事项维护↑↑↑↑↑↑↑↑↑↑↑↑↑↑-->
+    </data>
+</odoo>

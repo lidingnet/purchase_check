@@ -1,0 +1,18 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+purchase_track_001,Deny all,model_purchase_track,,0,0,0,0
+purchase_track_01,write create,model_purchase_track,group_purchase_track_admin,1,1,1,1
+purchase_track_02,write create,model_purchase_track_line,group_purchase_track_admin,1,1,1,1
+purchase_track_03,write create,model_purchase_track_qc,group_purchase_track_admin,1,1,1,1
+purchase_track_04,write create,model_purchase_track_items,group_purchase_track_admin,1,1,1,1
+purchase_track_101,only read,model_purchase_track,group_purchase_track_salesman,1,0,0,0
+purchase_track_102,only read,model_purchase_track_line,group_purchase_track_salesman,1,0,0,0
+purchase_track_103,only read,model_purchase_track_qc,group_purchase_track_salesman,1,0,0,0
+purchase_track_104,write create,model_purchase_track_items,group_purchase_track_salesman,1,0,0,0
+purchase_track_201,write create,model_purchase_track,group_purchase_track_tracker,1,1,0,0
+purchase_track_202,write create,model_purchase_track_line,group_purchase_track_tracker,1,1,1,0
+purchase_track_203,write create,model_purchase_track_qc,group_purchase_track_tracker,1,1,1,0
+purchase_track_204,write create,model_purchase_track_items,group_purchase_track_tracker,1,0,0,0
+purchase_track_301,write create,model_purchase_track,group_purchase_track_lead,1,1,0,0
+purchase_track_302,write create,model_purchase_track_line,group_purchase_track_lead,1,1,1,0
+purchase_track_303,write create,model_purchase_track_qc,group_purchase_track_lead,1,1,1,0
+purchase_track_304,write create,model_purchase_track_items,group_purchase_track_lead,1,0,0,0

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+<data>
+
+    <record id="group_purchase_track_lead" model="res.groups">
+        <field name="name">采购跟单-跟单主管</field>
+    </record>
+    <record id="group_purchase_track_tracker" model="res.groups">
+        <field name="name">采购跟单-跟单员</field>
+    </record>
+    <record id="group_purchase_track_salesman" model="res.groups">
+        <field name="name">采购跟单-业务员</field>
+    </record>
+    <record id="group_purchase_track_admin" model="res.groups">
+        <field name="name">采购跟单-管理员</field>
+    </record>
+
+
+</data>
+
+<data noupdate="1">
+
+    <record model="ir.rule" id="purchase_self_track">
+      <field name="name">跟单员自己的单子</field>
+      <field name="model_id" ref="model_purchase_track"/>
+      <field name="domain_force">[('user_id','=',user.id)]</field>
+    </record>
+
+    <record model="ir.rule" id="purchase_self_track_salesman">
+      <field name="name">业务员自己的单子</field>
+      <field name="model_id" ref="model_purchase_track"/>
+      <field name="domain_force">['|',('contract_op_name','=',user.name),('salesman','=',user.name)]</field>
+    </record>
+
+</data>
+
+
+</odoo>
