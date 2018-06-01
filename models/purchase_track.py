@@ -41,6 +41,8 @@ class PurchaseTrack(models.Model):
     # have_invoice= fields.Boolean(string="开票")
     have_invoice= fields.Selection([('0','开票'),('1','不开票')], string="开票否")
     have_deliver= fields.Selection([('0','含'),('1','否')], string='含运')
+    have_pre_mass_sample= fields.Selection([('0','有'),('0','返单')], string='产前样')
+    pre_mass_sample_date= fields.Date(string="产前样日期")
     price_type= fields.Char(string= "价格类型")
     payment_method= fields.Char(string="付款方式")
     # payment_method= fields.Selection([('0','现金'),('1','月结'),('2','月结现金')], string= "结算方式")

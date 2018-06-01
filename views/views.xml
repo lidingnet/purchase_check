@@ -69,7 +69,9 @@
                     <field name="total_amount" />
                     <field name="have_invoice" />
                     <field name="have_deliver" />
-                    <field name="payment_method" />
+                    <field name="have_deliver" />
+                    <field name="have_pre_mass_sample" />
+                    <field name="pre_mass_sample_date" />
                     <field name="cust_no" />
                     <field name="purchase_delivery_date" />
                     <field name="purchase_back_date" />
@@ -140,7 +142,8 @@
                                 <field name="contract_op_name" readonly="1" />
                                 <field name="salesman" readonly="1" />
                                 <field name="cust_no" readonly="1" />
-
+                                <field name="have_pre_mass_sample" />
+                                <field name="pre_mass_sample_date" />
                             </group>
                         </group>
                         <!--跟单表单详细信息-->
