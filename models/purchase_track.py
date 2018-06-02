@@ -41,7 +41,7 @@ class PurchaseTrack(models.Model):
     # have_invoice= fields.Boolean(string="开票")
     have_invoice= fields.Selection([('0','开票'),('1','不开票')], string="开票否")
     have_deliver= fields.Selection([('0','含'),('1','否')], string='含运')
-    have_pre_mass_sample= fields.Selection([('0','有'),('0','返单')], string='产前样')
+    have_pre_mass_sample= fields.Selection([('0','有'),('1','返单')], string='产前样')
     pre_mass_sample_date= fields.Date(string="产前样日期")
     price_type= fields.Char(string= "价格类型")
     payment_method= fields.Char(string="付款方式")
@@ -110,7 +110,7 @@ class PurchaseTrack(models.Model):
             def _choose(trackItems, track_id):
                 # 格式化返回日期，合并跟单项名称
                 final_date= self.choose(trackItems, track_id)
-                if final_date != '':
+                if final_date:
                     # 字段本身输出字符串，先转换成时间格式，再格式化输出
                     final_date= datetime.datetime.strptime(final_date, '%Y-%m-%d').strftime("%m/%d")
                     # 从 跟单项目表 中找到 对应 项目名称

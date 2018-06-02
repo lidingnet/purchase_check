@@ -56,7 +56,7 @@
                     <field name="purchase_id" />
                     <field name="purchase_year" />
                     <field name="purchase_month" />
-                    <field name="purcharse_no" />
+                    <field name="purcharse_no" string=""/>
                     <field name="salesman" />
                     <field name="user_id" />
                     <!--<field name="contract_op_name" />-->
@@ -71,7 +71,7 @@
                     <field name="have_deliver" />
                     <field name="have_deliver" />
                     <field name="have_pre_mass_sample" />
-                    <field name="pre_mass_sample_date" />
+                    <field name="pre_mass_sample_date" attrs="{'invisible':[('have_pre_mass_sample' , '=' , '1')]}" />
                     <field name="cust_no" />
                     <field name="purchase_delivery_date" />
                     <field name="purchase_back_date" />
@@ -143,7 +143,7 @@
                                 <field name="salesman" readonly="1" />
                                 <field name="cust_no" readonly="1" />
                                 <field name="have_pre_mass_sample" />
-                                <field name="pre_mass_sample_date" />
+                                <field name="pre_mass_sample_date" attrs="{'invisible':[('have_pre_mass_sample','=','1')]}" />
                             </group>
                         </group>
                         <!--跟单表单详细信息-->
