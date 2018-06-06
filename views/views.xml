@@ -129,7 +129,7 @@
                             <group>
                                 <field name="supply_name" readonly="1" />
                                 <field name="buyer" readonly="1" />
-                                <field name="purchase_delivery_date" readonly="1" />
+                                <field name="purchase_delivery_date" readonly="0" />
                                 <field name="is_finished" />
                                 <field name="delivery_state" />
                                 <field name="have_invoice" />
